@@ -20,7 +20,7 @@ function checkAnswers() {
   ];
   
   var score = 0;
-  var feedback = "<h2>Feedback:</h2>";
+  var feedback = "<h2>Corrección:</h2>";
 
   for (var i = 1; i <= 10; i++) {
     var userAnswer = document.getElementById("q" + i).value.trim();
@@ -54,7 +54,7 @@ function checkAnswers() {
   <p>9. She's been a vegetarian <input type="text" id="q9"> three years.</p>
   <p>10. I haven't worked <input type="text" id="q10"> last December.</p>
 
-  <button type="button" onclick="checkAnswers()">Submit Answers</button>
+  <button type="button" onclick="checkAnswers()">Corregir</button>
 </form>
 
 <div id="feedback"></div>
