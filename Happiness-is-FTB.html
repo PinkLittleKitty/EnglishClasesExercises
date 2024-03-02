@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fill in the Blanks</title>
+<script>
+function checkAnswers() {
+  var answers = [
+    "to be",
+    "Swimming",
+    "to come",
+    "not talking",
+    "seeing",
+    "to earn",
+    "to give",
+    "to learn",
+    "winning",
+    "not hitting",
+    "to go",
+    "stopping",
+    "going",
+    "to be",
+    "to go",
+    "eating",
+    "to not understand",
+    "remembering"
+  ];
+  
+  var score = 0;
+  var feedback = "<h2>Corrección:</h2>";
+
+  for (var i = 1; i <= 10; i++) {
+    var userAnswer = document.getElementById("q" + i).value.trim();
+    var correctAnswer = answers[i - 1];
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+      score++;
+      feedback += "<p>Pregunta " + i + ": Correcto!</p>";
+    } else {
+      feedback += "<p>Pregunta " + i + ": Incorrecto. La respuesta correcta es '" + correctAnswer + "'.</p>";
+    }
+  }
+
+  feedback += "<h2>Nota: " + score + "/10</h2>";
+  document.getElementById("feedback").innerHTML = feedback;
+}
+</script>
+</head>
+<body>
+
+<h1>Fill in the blanks with for and since:</h1>
+
+<form>
+  <p>1. I can't promise  <input type="text" id="q1" value="to be"> (be) on time</p>
+  <p>2. <input type="text" id="q2"> (swim) is better exercise than running.</p>
+  <p>3. Would you like <input type="text" id="q3"> (come) to a concert on Saturday?.</p>
+  <p>4. Do you mind <input type="text" id="q4"> (not talk) so loudly?.</p>
+  <p>5. It was very interesting <input type="text" id="q5"> (see) my old school friends again.</p>
+  <p>6. Duncan works at weekends <input type="text" id="q6"> (earn) more money</p>
+  <p>7. We were unhappy with the service, so the restaurant offered <input type="text" id="q7"> (give) us a free diner.</p>
+  <p>8. Is it difficult <input type="text" id="q8"> Japanese?</p>
+  <p>9. James is very competitive. He thinks <input type="text" id="q9"> (win) is the most important thing.</p>
+  <p>10. She tried <input type="text" id="q10"> (not hit) the man, but she was driving too fast.</p>
+  <p>11. Excuse me, I need <input type="text" id="q11"> (go) to the bathroom.</p>
+  <p>12. They drove without <input type="text" id="q12"> (stop) for six hours.</p>
+  <p>13. We're thinking of <input type="text" id="q13"> (go) to Mexico for our holidays next year.</p>
+  <p>14. I'm very happy <input type="text" id="q14"> (be) here again.</p>
+  <p>15. We've decided <input type="text" id="q15"> (go) camping this summer because it's cheaper.</p>
+  <p>16. <input type="text" id="q16"> (eat) just before you go to bed can make it difficult to sleep.</p>
+  <p>17. The man pretended <input type="text" id="q17"> (understand) the policeman.</p>
+  <p>18. Are you good at <input type="text" id="q18"> (remember) people's names?</p>
+
+  <button type="button" onclick="checkAnswers()">Corregir</button>
+</form>
+
+<div id="feedback"></div>
+
+</body>
+</html>
