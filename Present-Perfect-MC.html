@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Choice</title>
+</head>
+<body>
+
+<h1>Choose the correct option:</h1>
+
+<form>
+  <p>1. John’s parents have been living in Germany _____ a long time.</p>
+  <input type="radio" id="q1a" name="q1" value="for">
+  <label for="q1a">for</label><br>
+  <input type="radio" id="q1b" name="q1" value="since">
+  <label for="q1b">since</label><br>
+
+  <p>2. The cat hasn’t eaten anything _____ yesterday.</p>
+  <input type="radio" id="q2a" name="q2" value="for">
+  <label for="q2a">for</label><br>
+  <input type="radio" id="q2b" name="q2" value="since">
+  <label for="q2b">since</label><br>
+
+  <p>3. Kim and Joey have been friends _____ three years.</p>
+  <input type="radio" id="q3a" name="q3" value="for">
+  <label for="q3a">for</label><br>
+  <input type="radio" id="q3b" name="q3" value="since">
+  <label for="q3b">since</label><br>
+
+  <p>4. Miss Thomas has taught at my school _____ 1975.</p>
+  <input type="radio" id="q4a" name="q4" value="for">
+  <label for="q4a">for</label><br>
+  <input type="radio" id="q4b" name="q4" value="since">
+  <label for="q4b">since</label><br>
+
+  <p>5. Guy has known Joanna _____ they were at primary school.</p>
+  <input type="radio" id="q5a" name="q5" value="for">
+  <label for="q5a">for</label><br>
+  <input type="radio" id="q5b" name="q5" value="since">
+  <label for="q5b">since</label><br>
+
+  <p>6. Have you seen her _____ she got married?</p>
+  <input type="radio" id="q6a" name="q6" value="for">
+  <label for="q6a">for</label><br>
+  <input type="radio" id="q6b" name="q6" value="since">
+  <label for="q6b">since</label><br>
+
+  <p>7. I haven’t heard from my pen pal _____ a long time.</p>
+  <input type="radio" id="q7a" name="q7" value="for">
+  <label for="q7a">for</label><br>
+  <input type="radio" id="q7b" name="q7" value="since">
+  <label for="q7b">since</label><br>
+
+  <p>8. Haley has played the saxophone _____ she was 12.</p>
+  <input type="radio" id="q8a" name="q8" value="for">
+  <label for="q8a">for</label><br>
+  <input type="radio" id="q8b" name="q8" value="since">
+  <label for="q8b">since</label><br>
+
+  <p>9. It has rained without interruption _____ three days.</p>
+  <input type="radio" id="q9a" name="q9" value="for">
+  <label for="q9a">for</label><br>
+  <input type="radio" id="q9b" name="q9" value="since">
+  <label for="q9b">since</label><br>
+
+  <p>10. He’s written to her every day _____ she left.</p>
+  <input type="radio" id="q10a" name="q10" value="for">
+  <label for="q10a">for</label><br>
+  <input type="radio" id="q10b" name="q10" value="since">
+  <label for="q10b">since</label><br>
+
+  <button type="button" onclick="checkAnswers()">Corregir</button>
+</form>
+
+<div id="feedback"></div>
+
+<script>
+function checkAnswers() {
+  var answers = [
+    "for",
+    "since",
+    "for",
+    "since",
+    "since",
+    "since",
+    "for",
+    "since",
+    "for",
+    "since"
+  ];
+
+  var score = 0;
+  var feedback = "<h2>Corrección:</h2>";
+
+  for (var i = 1; i <= 10; i++) {
+    var userAnswer = document.querySelector('input[name="q' + i + '"]:checked');
+    if (userAnswer !== null && userAnswer.value === answers[i - 1]) {
+      score++;
+      feedback += "<p>Pregunta " + i + ": Correcto!</p>";
+    } else {
+      feedback += "<p>Pregunta " + i + ": Incorrecto. La respuesta correcta es '" + answers[i - 1] + "'.</p>";
+    }
+  }
+
+  feedback += "<h2>Nota: " + score + "/10</h2>";
+  document.getElementById("feedback").innerHTML = feedback;
+}
+</script>
+
+</body>
+</html>
