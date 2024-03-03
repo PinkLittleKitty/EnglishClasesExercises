@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fill in the Blanks with should/shouldn't + a verb from the list:</title>
+<script>
+function checkAnswers() {
+  var answers = [
+    "shouldn't use",
+    "should ask",
+    "should tell",
+    "should get",
+    "shouldn't sit",
+    "should get up",
+    "shouldn't think",
+    "shouldn't go",
+    "should learn",
+    "should go"
+  ];
+  
+  var score = 0;
+  var feedback = "<h2>Corrección:</h2>";
+
+  for (var i = 1; i <= 10; i++) {
+    var userAnswer = document.getElementById("q" + i).value.trim();
+    var correctAnswer = answers[i - 1];
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+      score++;
+      feedback += "<p>Pregunta " + i + ": Correcto!</p>";
+    } else {
+      feedback += "<p>Pregunta " + i + ": Incorrecto. La respuesta correcta es '" + correctAnswer + "'.</p>";
+    }
+  }
+
+  feedback += "<h2>Nota: " + score + "/10</h2>";
+  document.getElementById("feedback").innerHTML = feedback;
+}
+</script>
+</head>
+<body>
+
+<h1>Fill in the blanks with the correct form of the verbs:</h1>
+
+<div>
+  <table border="1">
+    <tr>
+      <th>Ask</th>
+      <th>Get</th>
+      <th>Get up</th>
+      <th>Go (x2)</th>
+      <th>Learn</th>
+      <th>Sit</th>
+      <th>tell</th>
+      <th>think</th>
+      <th>use</th>
+    </tr>
+  </table>
+</div>
+
+<form>
+  <p>1. A: What are you doing?</p>
+  <p>B: I'm trying to open this packet.</p>
+  <p>A: You <input type="text" id="q1" value="shouldn't use"> a knife! You'll cut yourself!</p>
+  <p>2. A: I can't do this exercise. It's too difficult.</p>
+  <p>B: You <input type="text" id="q2"> the teacher for some help.</p>
+  <p>3. A: I'm really annoyed with Paula.</p>
+  <p>B: Why?</p>
+  <p>A: Because she's always on the computer. She never talks to me!</p>
+  <p>B: You <input type="text" id="q3"> how you feel. Maybe she doesn't know.</p>
+  <p>4. A: Angela's leaving work at the end of the month. She's going to have a baby.</p>
+  <p>B: We <input type="text" id="q4"> her a present</p>
+  <p>5. A: You <input type="text" id="q5"> so close to the television.</p>
+  <p>B: Why not?</p>
+  <p>A: It isn't good for your eyes.</p>
+  <p>6. A: I miss the bus to college nearly every day.</p>
+  <p>B: You <input type="text" id="q6"> earlier.</p>
+  <p>7. A: Good luck for the match!</p>
+  <p>B: Thanks, but I'm sure I'm going to lose.</p>
+  <p>A: You <input type="text" id="q7"> like that! Be positive! Say to yourself, "I'm going to win! I'm going to win!"</p>
+  <p>8. A: Come on. Get up. It's 9:30.</p>
+  <p>B: But I'm tired.</p>
+  <p>A: You <input type="text" id="q8"> to bed so late.</p>
+  <p>9. A: Can you make me an omelette, please?</p>
+  <p>B: Make it yourself!</p>
+  <p>A: I don't know how to.</p>
+  <p>B: You <input type="text" id="q9"> how to cook then!</p>
+  <p>10. A: I'd love to travel round the world.</p>
+  <p>B: Do you have enough money for the trip?</p>
+  <p>A: Well, yes.</p>
+  <p>B: Then I think you <input type="text" id="q10"></p>
+
+  <button type="button" onclick="checkAnswers()">Corregir</button>
+</form>
+
+<div id="feedback"></div>
+
+</body>
+</html>
