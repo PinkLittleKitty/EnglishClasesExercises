@@ -88,6 +88,26 @@
   }
 </style>
 <script>
+  function scrambleDraggables() {
+  const startBox = document.querySelector('.start-box');
+  const draggables = startBox.querySelectorAll('.drag-item');
+  
+  // Convert NodeList to array
+  const draggablesArray = Array.from(draggables); 
+  
+  // Shuffle array
+  draggablesArray.sort(() => Math.random() - 0.5);
+
+  startBox.innerHTML = '';
+
+  draggablesArray.forEach(draggable => {
+    startBox.appendChild(draggable); 
+  });
+}
+
+// Call scramble function on page load
+window.addEventListener('load', scrambleDraggables);
+
   function handleDragStart(ev, id) {
     ev.dataTransfer.setData("text", id);
   }
