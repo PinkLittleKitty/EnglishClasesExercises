@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fill in the Blanks with the correct form of the verbs in brackets:</title>
+<script>
+function checkAnswers() {
+  var answers = [
+  ];
+  
+  var score = 0;
+  var feedback = "<h2>Corrección:</h2>";
+
+  for (var i = 1; i <= 10; i++) {
+    var userAnswer = document.getElementById("q" + i).value.trim();
+    var correctAnswer = answers[i - 1];
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+      score++;
+      feedback += "<p>Pregunta " + i + ": Correcto!</p>";
+    } else {
+      feedback += "<p>Pregunta " + i + ": Incorrecto. La respuesta correcta es '" + correctAnswer + "'.</p>";
+    }
+  }
+
+  feedback += "<h2>Nota: " + score + "/20</h2>";
+  document.getElementById("feedback").innerHTML = feedback;
+}
+</script>
+</head>
+<body>
+
+<h1>Complete the conversations with the second conditional forms of the verbs in brackets:</h1>
+
+<form>
+  <p>1. A: Look at Hannah. She’s so lazy.</p>
+  <p>B: I know. If the boss <input type="text" id="q1" value="came"> in now, he <input type="text" id="q2" value="wouldn't be"> very happy. (come, not be).</p>
+  <p>2. A: What <input type="text" id="q3"> if Adam <input type="text" id="q4"> you on a date? (you say, ask)</p>
+  <p>B: I think I <input type="text" id="q5"> yes! (say)</p>
+  <p>3. A: Ouch! My tooth hurts.</p>
+  <p>B: You <input type="text" id="q6"> so many problems with your teeth if you <input type="text" id="q7"> to the dentist more often. (not have, go)</p>
+  <p>4. A: Is the answer to number 5 A or B?</p>
+  <p>B: If I <input type="text" id="q8"> the answer, I <input type="text" id="q9"> you. But I don’t! (know, tell) </p>
+  <p>5. A: Why don’t you cycle to work?</p>
+  <p>B: I <input type="text" id="q10"> if I <input type="text" id="q11"> nearer to the office, but I live too far away. (cycle, live)</p>
+  <p>6. A: Wow! Those shoes are great. I <input type="text" id="q12"> them if I <input type="text" id="q13"> more money. (buy, have)</p>
+  <p>B: Well, you <input type="text" id="q14"> more money if you <input type="text" id="q15"> shopping so often. (have, not go)</p>
+  <p>7. A: If you <input type="text" id="q16"> the lottery, how <input type="text" id="q17"> spend the money? (win, you spend)</p>
+  <p>B: I <input type="text" id="q18"> a big house in the country. (buy)</p>
+  <p>8. A: I'm so tired. </p>
+  <p>B: We <input type="text" id="q19"> much better if the neighbours’ baby <input type="text" id="q20"> all night. (sleep, not cry.)</p>
+  
+  <button type="button" onclick="checkAnswers()">Corregir</button>
+</form>
+
+<div id="feedback"></div>
+
+</body>
+</html>
