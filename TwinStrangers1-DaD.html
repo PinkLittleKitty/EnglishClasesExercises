@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop</title>
+<style>
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .feedback {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .start-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #2b2b2b8f;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    z-index: 1;
+  }
+
+  .drag-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .sentence-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .sentence {
+    margin-right: 10px;
+  }
+
+  .drop-area {
+  min-height: 5px;
+  min-width: 5px;
+  border: 2px dashed #ccc;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  }
+
+  .drop-area.incorrect {
+    background-color: red;
+  }
+
+  .drop-area.correct {
+    background-color: lightgreen;
+  }
+
+  .feedback {
+    margin-top: 5px;
+    display: none;
+  }
+
+  .drop-area.incorrect + .feedback,
+  .drop-area.correct + .feedback {
+    display: block;
+  }
+
+  .drop-area.highlight {
+    border-color: blue;
+  }
+</style>
+<script>
+  function scrambleDraggables() {
+  const startBox = document.querySelector('.start-box');
+  const draggables = startBox.querySelectorAll('.drag-item');
+  
+  // Convert NodeList to array
+  const draggablesArray = Array.from(draggables); 
+  
+  // Shuffle array
+  draggablesArray.sort(() => Math.random() - 0.5);
+
+  startBox.innerHTML = '';
+
+  draggablesArray.forEach(draggable => {
+    startBox.appendChild(draggable); 
+  });
+}
+
+// Call scramble function on page load
+window.addEventListener('load', scrambleDraggables);
+
+  function handleDragStart(ev, id) {
+    ev.dataTransfer.setData("text", id);
+  }
+
+  function handleDragEnd(ev) {
+    ev.target.classList.add("drag-item");
+    ev.target.setAttribute("draggable", "true");
+
+    ResizeStartingBox();
+  }
+
+  function ResizeStartingBox()
+  {
+    var startBox = document.querySelector('.start-box');
+    var draggableItems = document.querySelectorAll('.drag-item');
+    startBox.style.width = (10 + (draggableItems.length * 110)) + 'px';
+    startBox.style.height = (10 + (draggableItems.length * 2)) + 'px';
+  }
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var draggedElement = document.getElementById(data);
+    var dropzone = ev.target;
+
+    if (dropzone.classList.contains("drop-area")) {
+      dropzone.appendChild(draggedElement);
+      draggedElement.classList.remove("drag-item");
+      draggedElement.setAttribute("draggable", "false");
+      dropzone.classList.remove("highlight");
+
+      var dropArea = dropzone.parentElement;
+      var answer = draggedElement.textContent.trim().toLowerCase();
+      var correctAnswer =dropArea.dataset.answer.toLowerCase();
+      if (answer === correctAnswer) {
+        dropArea.classList.add("correct");
+        dropArea.classList.remove("incorrect");
+      } else {
+        dropArea.classList.add("incorrect");
+        dropArea.classList.remove("correct");
+      }
+      dropArea.style.width = (answer.length * 10) + 'px';
+      dropArea.style.height = (answer.length * 10) + 'px';
+
+      updateAnswer(draggedElement);
+    } else if (dropzone.classList.contains("start-box")) {
+      dropzone.appendChild(draggedElement);
+      draggedElement.classList.add("drag-item");
+      draggedElement.setAttribute("draggable", "true");
+      dropzone.classList.add("highlight");
+    }
+  }
+
+  function updateAnswer(element) {
+    var questionNumber = element.dataset.question;
+    var answer = element.textContent.trim().toLowerCase();
+    var correctAnswer = document.getElementById("correct-answer-" + questionNumber).textContent.toLowerCase();
+    var feedback = document.getElementById("feedback-" + questionNumber);
+
+    if (answer === correctAnswer) {
+      feedback.innerHTML = "<p>Correcto!</p>";
+    }else {
+      feedback.innerHTML = "<p>Incorrecto. La respuesta correcta es '" + correctAnswer + "'.</p>";
+    }
+  }
+
+  function checkAnswers() {
+    var answers = [
+      "both",
+      "identical",
+      "from",
+      "like",
+      "as",
+      "similar"
+    ];
+
+    var score = 0;
+
+    for (var i = 1; i <= 9; i++) {
+      var userAnswer = document.getElementById("drop" + i).textContent.trim().toLowerCase();
+      var correctAnswer = answers[i - 1];
+      if (userAnswer === correctAnswer) {
+        score++;
+        document.getElementById("feedback-" + i).innerHTML = "<p>Correcto!</p>";
+        document.getElementById("drop" + i).classList.add("correct");
+        document.getElementById("drop" + i).classList.remove("incorrect");
+      } else {
+        document.getElementById("feedback-" + i).innerHTML = "<p>Incorrecto. La respuesta correcta es '" + correctAnswer + "'.</p>";
+        document.getElementById("drop" + i).classList.add("incorrect");
+        document.getElementById("drop" + i).classList.remove("correct");
+      }
+    }
+
+    document.getElementById("feedback").innerHTML = "<h2>Nota: " + score + "/9</h2>";
+  }
+</script>
+</head>
+<body onload="ResizeStartingBox();">
+
+<h1>Fill in the blanks with the correct words:</h1>
+
+<div class="start-box highlight" id="drop0" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <div class="drag-item" id="drag1" draggable="true" ondragstart="handleDragStart(event, 'drag1')" ondragend="handleDragEnd(event)" data-question="1">both</div>
+  <div class="drag-item" id="drag2" draggable="true" ondragstart="handleDragStart(event, 'drag2')" ondragend="handleDragEnd(event)" data-question="2">identical</div>
+  <div class="drag-item" id="drag3" draggable="true" ondragstart="handleDragStart(event, 'drag3')" ondragend="handleDragEnd(event)" data-question="3">from</div>
+  <div class="drag-item" id="drag4" draggable="true" ondragstart="handleDragStart(event, 'drag4')" ondragend="handleDragEnd(event)" data-question="4">like</div>
+  <div class="drag-item" id="drag5" draggable="true" ondragstart="handleDragStart(event, 'drag5')" ondragend="handleDragEnd(event)" data-question="5">as</div>
+  <div class="drag-item" id="drag6" draggable="true" ondragstart="handleDragStart(event, 'drag6')" ondragend="handleDragEnd(event)" data-question="6">similar</div>
+</div>
+
+<form>
+  <div class="sentence-container">
+    <p class="sentence">1. Cordelia and Ciara were</p>
+    <div class="drop-area" id="drop1" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="both"></div>
+    <p>on Erasmus scholarships.</p>
+  </div>
+  <div class="feedback" id="feedback-1"></div>
+  <div class="sentence-container">
+    <p class="sentence">2. The two girls looked</p>
+    <div class="drop-area" id="drop2" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="identical"></div>
+    <p>.</p>
+  </div>
+  <div class="feedback" id="feedback-2"></div>
+  <div class="sentence-container">
+    <p class="sentence">3. The first photos Maggie looked at were totally different</p>
+    <div class="drop-area" id="drop3" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="from"></div>
+    <p>her.</p>
+  </div>
+  <div class="feedback" id="feedback-3"></div>
+  <div class="sentence-container">
+    <p class="sentence">4. Maggie found one woman who looked just</p>
+    <div class="drop-area" id="drop4" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="like"></div>
+    <p>her brother.</p>
+  </div>
+  <div class="feedback" id="feedback-4"></div>
+  <div class="sentence-container">
+    <p class="sentence">5. Her husband said "She has the same mouth</p>
+    <div class="drop-area" id="drop5" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="as"></div>
+    <p>you".</p>
+  </div>
+  <div class="feedback" id="feedback-5"></div>
+  <div class="sentence-container">
+    <p class="sentence">6. Maggie's "twin" looks very</p>
+    <div class="drop-area" id="drop6" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="similar"></div>
+    <p>to her.</p>
+  </div>
+  <div class="feedback" id="feedback-6"></div>
+</form>
+
+<button type="button" onclick="checkAnswers()">Corregir</button>
+<div id="feedback"></div>
+
+</body>
+</html>
